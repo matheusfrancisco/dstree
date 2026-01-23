@@ -1,0 +1,312 @@
+warning|:|src/binary.rs|:|36|:|36|:|8|:|12|:|field `value` is never read|:|[0m[1m[33mwarning[0m[0m[1m: field `value` is never read[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0msrc/binary.rs:37:5[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m36[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mstruct Node<T> {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[38;5;12m----[0m[0m [0m[0m[1m[38;5;12mfield in this struct[0m
+[0m[1m[38;5;12m37[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    value: T,[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `Node` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(dead_code)]` on by default[0m
+
+|:|none
+warning|:|src/binary.rs|:|37|:|37|:|5|:|10|:|field `value` is never read|:|[0m[1m[33mwarning[0m[0m[1m: field `value` is never read[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0msrc/binary.rs:37:5[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m36[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mstruct Node<T> {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[38;5;12m----[0m[0m [0m[0m[1m[38;5;12mfield in this struct[0m
+[0m[1m[38;5;12m37[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    value: T,[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `Node` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(dead_code)]` on by default[0m
+
+|:|none
+warning|:|src/binary.rs|:|47|:|47|:|1|:|22|:|methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used|:|[0m[1m[33mwarning[0m[0m[1m: methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0msrc/binary.rs:58:8[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m [0m[0m[1m[38;5;12m47[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl<T> BinaryTree<T> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m---------------------[0m[0m [0m[0m[1m[38;5;12mmethods in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m58[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn clear_it(&mut self) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m81[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_left(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m89[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_right(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m97[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn get_root(&self) -> Option<&Node<T>> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m102[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn insert_random(&mut self, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^[0m
+
+|:|none
+warning|:|src/binary.rs|:|58|:|58|:|8|:|16|:|methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used|:|[0m[1m[33mwarning[0m[0m[1m: methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0msrc/binary.rs:58:8[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m [0m[0m[1m[38;5;12m47[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl<T> BinaryTree<T> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m---------------------[0m[0m [0m[0m[1m[38;5;12mmethods in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m58[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn clear_it(&mut self) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m81[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_left(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m89[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_right(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m97[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn get_root(&self) -> Option<&Node<T>> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m102[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn insert_random(&mut self, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^[0m
+
+|:|none
+warning|:|src/binary.rs|:|81|:|81|:|8|:|16|:|methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used|:|[0m[1m[33mwarning[0m[0m[1m: methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0msrc/binary.rs:58:8[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m [0m[0m[1m[38;5;12m47[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl<T> BinaryTree<T> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m---------------------[0m[0m [0m[0m[1m[38;5;12mmethods in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m58[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn clear_it(&mut self) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m81[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_left(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m89[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_right(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m97[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn get_root(&self) -> Option<&Node<T>> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m102[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn insert_random(&mut self, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^[0m
+
+|:|none
+warning|:|src/binary.rs|:|89|:|89|:|8|:|17|:|methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used|:|[0m[1m[33mwarning[0m[0m[1m: methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0msrc/binary.rs:58:8[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m [0m[0m[1m[38;5;12m47[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl<T> BinaryTree<T> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m---------------------[0m[0m [0m[0m[1m[38;5;12mmethods in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m58[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn clear_it(&mut self) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m81[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_left(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m89[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_right(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m97[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn get_root(&self) -> Option<&Node<T>> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m102[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn insert_random(&mut self, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^[0m
+
+|:|none
+warning|:|src/binary.rs|:|97|:|97|:|8|:|16|:|methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used|:|[0m[1m[33mwarning[0m[0m[1m: methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0msrc/binary.rs:58:8[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m [0m[0m[1m[38;5;12m47[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl<T> BinaryTree<T> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m---------------------[0m[0m [0m[0m[1m[38;5;12mmethods in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m58[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn clear_it(&mut self) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m81[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_left(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m89[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_right(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m97[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn get_root(&self) -> Option<&Node<T>> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m102[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn insert_random(&mut self, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^[0m
+
+|:|none
+warning|:|src/binary.rs|:|102|:|102|:|8|:|21|:|methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used|:|[0m[1m[33mwarning[0m[0m[1m: methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0msrc/binary.rs:58:8[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m [0m[0m[1m[38;5;12m47[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl<T> BinaryTree<T> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m---------------------[0m[0m [0m[0m[1m[38;5;12mmethods in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m58[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn clear_it(&mut self) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m81[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_left(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m89[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_right(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m97[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn get_root(&self) -> Option<&Node<T>> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m102[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn insert_random(&mut self, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^[0m
+
+|:|none
+warning|:|src/binary.rs|:|36|:|36|:|8|:|12|:|field `value` is never read|:|[0m[1m[33mwarning[0m[0m[1m: field `value` is never read[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0msrc/binary.rs:37:5[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m36[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mstruct Node<T> {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[38;5;12m----[0m[0m [0m[0m[1m[38;5;12mfield in this struct[0m
+[0m[1m[38;5;12m37[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    value: T,[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `Node` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(dead_code)]` on by default[0m
+
+|:|none
+warning|:|src/binary.rs|:|37|:|37|:|5|:|10|:|field `value` is never read|:|[0m[1m[33mwarning[0m[0m[1m: field `value` is never read[0m
+[0m  [0m[0m[1m[38;5;12m--> [0m[0msrc/binary.rs:37:5[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m36[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mstruct Node<T> {[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[38;5;12m----[0m[0m [0m[0m[1m[38;5;12mfield in this struct[0m
+[0m[1m[38;5;12m37[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    value: T,[0m
+[0m   [0m[0m[1m[38;5;12m|[0m[0m     [0m[0m[1m[33m^^^^^[0m
+[0m   [0m[0m[1m[38;5;12m|[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `Node` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis[0m
+[0m   [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `#[warn(dead_code)]` on by default[0m
+
+|:|none
+warning|:|src/binary.rs|:|47|:|47|:|1|:|22|:|methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used|:|[0m[1m[33mwarning[0m[0m[1m: methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0msrc/binary.rs:58:8[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m [0m[0m[1m[38;5;12m47[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl<T> BinaryTree<T> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m---------------------[0m[0m [0m[0m[1m[38;5;12mmethods in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m58[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn clear_it(&mut self) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m81[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_left(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m89[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_right(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m97[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn get_root(&self) -> Option<&Node<T>> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m102[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn insert_random(&mut self, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^[0m
+
+|:|none
+warning|:|src/binary.rs|:|58|:|58|:|8|:|16|:|methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used|:|[0m[1m[33mwarning[0m[0m[1m: methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0msrc/binary.rs:58:8[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m [0m[0m[1m[38;5;12m47[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl<T> BinaryTree<T> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m---------------------[0m[0m [0m[0m[1m[38;5;12mmethods in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m58[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn clear_it(&mut self) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m81[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_left(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m89[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_right(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m97[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn get_root(&self) -> Option<&Node<T>> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m102[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn insert_random(&mut self, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^[0m
+
+|:|none
+warning|:|src/binary.rs|:|81|:|81|:|8|:|16|:|methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used|:|[0m[1m[33mwarning[0m[0m[1m: methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0msrc/binary.rs:58:8[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m [0m[0m[1m[38;5;12m47[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl<T> BinaryTree<T> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m---------------------[0m[0m [0m[0m[1m[38;5;12mmethods in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m58[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn clear_it(&mut self) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m81[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_left(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m89[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_right(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m97[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn get_root(&self) -> Option<&Node<T>> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m102[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn insert_random(&mut self, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^[0m
+
+|:|none
+warning|:|src/binary.rs|:|89|:|89|:|8|:|17|:|methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used|:|[0m[1m[33mwarning[0m[0m[1m: methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0msrc/binary.rs:58:8[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m [0m[0m[1m[38;5;12m47[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl<T> BinaryTree<T> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m---------------------[0m[0m [0m[0m[1m[38;5;12mmethods in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m58[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn clear_it(&mut self) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m81[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_left(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m89[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_right(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m97[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn get_root(&self) -> Option<&Node<T>> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m102[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn insert_random(&mut self, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^[0m
+
+|:|none
+warning|:|src/binary.rs|:|97|:|97|:|8|:|16|:|methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used|:|[0m[1m[33mwarning[0m[0m[1m: methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0msrc/binary.rs:58:8[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m [0m[0m[1m[38;5;12m47[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl<T> BinaryTree<T> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m---------------------[0m[0m [0m[0m[1m[38;5;12mmethods in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m58[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn clear_it(&mut self) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m81[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_left(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m89[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_right(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m97[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn get_root(&self) -> Option<&Node<T>> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m102[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn insert_random(&mut self, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^[0m
+
+|:|none
+warning|:|src/binary.rs|:|102|:|102|:|8|:|21|:|methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used|:|[0m[1m[33mwarning[0m[0m[1m: methods `clear_it`, `add_left`, `add_right`, `get_root`, and `insert_random` are never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0msrc/binary.rs:58:8[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m [0m[0m[1m[38;5;12m47[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mimpl<T> BinaryTree<T> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m [0m[0m[1m[38;5;12m---------------------[0m[0m [0m[0m[1m[38;5;12mmethods in this implementation[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m58[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn clear_it(&mut self) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m81[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_left(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m89[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn add_right(&mut self, parent: &mut Node<T>, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m [0m[0m[1m[38;5;12m97[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn get_root(&self) -> Option<&Node<T>> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^[0m
+[0m[1m[38;5;12m...[0m
+[0m[1m[38;5;12m102[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0m    fn insert_random(&mut self, value: T) {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m        [0m[0m[1m[33m^^^^^^^^^^^^^[0m
+
+|:|none

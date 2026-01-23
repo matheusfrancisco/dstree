@@ -1,5 +1,3 @@
-mod binary;
-
 fn main() {
-    println!("Hello, world!");
+    println!("Not Implemented yet");
 }

@@ -2,5 +2,54 @@
 name = "dstree"
 version = "0.1.0"
 edition = "2024"
+authors = ["Chico"]
+description = "Learn Rust through tree data structure implementations"
+license = "MIT OR Apache-2.0"
 
 [dependencies]
+# Error handling
+thiserror = "1"
+
+# CLI for visualization tool
+clap = { version = "4", features = ["derive"] }
+colored = "2"
+
+# Serialization for visualization/debugging
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rand = "0.8"
+
+[dev-dependencies]
+# Property-based testing
+proptest = "1"
+
+# Benchmarking
+criterion = { version = "0.5", features = ["html_reports"] }
+
+# Concurrent testing
+loom = "0.7"
+
+#random data generation
+rand = "0.8"
+
+[profile.bench]
+opt-level = 3
+
+[profile.dev]
+opt-level = 0
+
+[profile.release]
+opt-level = 3
+lto = true
+
+[[bench]]
+name = "insertion"
+harness = false
+
+[[bench]]
+name = "search"
+harness = false
+
+[[bench]]
+name = "memory"
+harness = false
