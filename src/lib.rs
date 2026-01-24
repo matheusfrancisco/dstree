@@ -39,6 +39,7 @@ pub mod common;
 
 // Tree implementations
 pub mod binary;
+pub mod binary_traversal;
 pub mod bst;
 
 // Re-export commonly used types

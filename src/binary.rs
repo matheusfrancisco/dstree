@@ -28,20 +28,33 @@
 //! - Unlike Binary Search Trees (BST), Binary Trees do not enforce any ordering on the nodes.
 //! - They are more general and can represent various hierarchical structures.
 
+use std::fmt::Debug;
+
 use rand::random;
 
 use crate::common::traits::Tree;
+use crate::common::visualize::{TreeVisualBuilder, Visualize};
 
 #[derive(Debug, Clone)]
-struct Node<T> {
-    value: T,
-    left: Option<Box<Node<T>>>, // use option because a children may not exist
-    right: Option<Box<Node<T>>>, // box<..> puts the node on the heap to allow for recursion
+pub struct Node<T> {
+    pub value: T,
+    pub left: Option<Box<Node<T>>>, // use option because a children may not exist
+    pub right: Option<Box<Node<T>>>, // box<..> puts the node on the heap to allow for recursion
+}
+
+impl<T> Node<T> {
+    pub fn new(value: T) -> Self {
+        Self {
+            value,
+            left: None,
+            right: None,
+        }
+    }
 }
 
 #[derive(Debug, Clone)]
 pub struct BinaryTree<T> {
-    root: Option<Box<Node<T>>>,
+    pub root: Option<Box<Node<T>>>,
 }
 
 impl<T> BinaryTree<T> {
@@ -52,6 +65,16 @@ impl<T> BinaryTree<T> {
 
     pub fn is_empty(&self) -> bool {
         self.root.is_none()
+    }
+
+    pub fn height(&self) -> usize {
+        fn node_height<T>(node: &Option<Box<Node<T>>>) -> usize {
+            match node {
+                Some(n) => 1 + usize::max(node_height(&n.left), node_height(&n.right)),
+                None => 0,
+            }
+        }
+        node_height(&self.root)
     }
 
     // An iterative clear to avoid stack overflow on deep trees
@@ -78,26 +101,66 @@ impl<T> BinaryTree<T> {
         }
     }
 
-    fn add_left(&mut self, parent: &mut Node<T>, value: T) {
-        parent.left = Some(Box::new(Node {
+    pub fn add_left(&mut self, value: T) {
+        if let Some(ref mut root) = self.root {
+            if root.left.is_none() {
+                root.left = Some(Box::new(Node {
+                    value,
+                    left: None,
+                    right: None,
+                }));
+                return;
+            }
+            let mut current = root.as_mut();
+            while let Some(ref mut left_child) = current.left {
+                current = left_child.as_mut();
+            }
+            current.left = Some(Box::new(Node {
+                value,
+                left: None,
+                right: None,
+            }));
+        }
+    }
+
+    pub fn add_right(&mut self, value: T) {
+        // add right child to root
+        if let Some(ref mut root) = self.root {
+            if root.right.is_none() {
+                root.right = Some(Box::new(Node {
+                    value,
+                    left: None,
+                    right: None,
+                }));
+                return;
+            }
+            let mut current = root.as_mut();
+            while let Some(ref mut right_child) = current.right {
+                current = right_child.as_mut();
+            }
+            current.right = Some(Box::new(Node {
+                value,
+                left: None,
+                right: None,
+            }));
+        }
+    }
+
+    pub fn add_root(&mut self, value: T) {
+        self.root = Some(Box::new(Node {
             value,
             left: None,
             right: None,
         }));
     }
 
-    fn add_right(&mut self, parent: &mut Node<T>, value: T) {
-        parent.right = Some(Box::new(Node {
-            value,
-            left: None,
-            right: None,
-        }));
-    }
-
-    fn get_root(&self) -> Option<&Node<T>> {
+    pub fn get_root(&self) -> Option<&Node<T>> {
         self.root.as_deref()
     }
 
+    pub fn insert(&mut self, value: T) {
+        self.insert_random(value);
+    }
     // insert will choose random side to insert the new value
     fn insert_random(&mut self, value: T) {
         let new_node = Box::new(Node {
@@ -194,6 +257,39 @@ impl<T> Tree<T> for BinaryTree<T> {
     }
 }
 
+fn visualize_node<T: std::fmt::Display>(
+    node: &Node<T>,
+    builder: &mut TreeVisualBuilder,
+    prefix: &str,
+    is_last: bool,
+) {
+    let connector = if is_last { "└─" } else { "├─" };
+    builder.add_line(format!("{}{} {}", prefix, connector, node.value));
+
+    let new_prefix = format!("{}{}  ", prefix, if is_last { " " } else { "│" });
+
+    if let Some(ref left) = node.left {
+        visualize_node(left.as_ref(), builder, &new_prefix, node.right.is_none());
+    }
+
+    if let Some(ref right) = node.right {
+        visualize_node(right.as_ref(), builder, &new_prefix, true);
+    }
+}
+
+impl<T: std::fmt::Display> Visualize for BinaryTree<T> {
+    fn visualize(&self) -> String {
+        let mut builder = TreeVisualBuilder::new();
+        if let Some(root) = &self.root {
+            visualize_node(root, &mut builder, "", true);
+        } else {
+            builder.add_line("(empty tree)");
+        }
+
+        builder.build()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -267,5 +363,45 @@ mod tests {
             })),
         }));
         assert_eq!(tree.height(), 3);
+    }
+
+    #[test]
+    fn test_insert_random() {
+        let mut tree: BinaryTree<i32> = BinaryTree::new();
+        tree.insert_random(10);
+        assert_eq!(tree.len(), 1);
+
+        tree.insert_random(5);
+        tree.insert_random(15);
+        assert_eq!(tree.len(), 3);
+    }
+
+    #[test]
+    fn test_with_visualization() {
+        let mut tree = BinaryTree::new();
+        tree.add_root(10);
+        tree.add_left(5);
+        tree.add_left(53);
+        tree.add_left(533);
+        tree.add_right(15);
+        tree.add_right(154);
+        tree.add_right(158);
+
+        // Use the Visualize trait
+        println!("{}", tree.visualize());
+
+        // Or with TreeVisualBuilder for metadata
+        let mut builder = TreeVisualBuilder::new();
+        builder.add_line(format!("Tree with {} nodes", tree.len()));
+        builder.add_line(format!("Height: {}", tree.height()));
+        builder.add_line("");
+
+        tree.insert_random(29);
+        tree.insert_random(28);
+        tree.insert_random(21);
+        tree.insert_random(22);
+        tree.insert_random(23);
+        builder.add_line(tree.visualize());
+        println!("{}", builder.build());
     }
 }
