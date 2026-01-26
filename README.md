@@ -121,7 +121,7 @@ fn main() {
 ## Implementation Progress
 
 - [x] Phase 1: Project Setup & Common Infrastructure
-- [ ] Phase 2: Binary Tree (Box<T>)
+- [x] Phase 2: Binary Tree (Box<T>)
 - [ ] Phase 3: Binary Search Tree (Generic Constraints)
 - [ ] Phase 4: AVL Tree - Single-threaded (Rc<RefCell<T>>)
 - [ ] Phase 5: AVL Tree - Concurrent (Arc<RwLock<T>>)
