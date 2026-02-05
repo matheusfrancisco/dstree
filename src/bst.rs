@@ -27,6 +27,7 @@ use std::cmp::Ordering;
 
 use crate::common::error::{Result, TreeError};
 use crate::common::traits::{OrderedTree, Tree};
+use crate::{Traversable, Visitor};
 
 #[derive(Debug)]
 pub struct Node<T: Ord> {
@@ -202,6 +203,85 @@ impl<T: Ord> BST<T> {
     }
 }
 
+impl<T: Ord> Traversable<T> for BST<T> {
+    fn traverse_inorder<V: crate::Visitor<T>>(&self, visitor: &mut V) {
+        fn inorder<T: Ord, V: crate::Visitor<T>>(node: &Option<Box<Node<T>>>, visitor: &mut V) {
+            if let Some(n) = node {
+                inorder(&n.left, visitor);
+                visitor.visit(&n.value);
+                inorder(&n.right, visitor);
+            }
+        }
+        inorder(&self.root, visitor);
+    }
+
+    fn traverse_preorder<V: crate::Visitor<T>>(&self, visitor: &mut V) {
+        if self.root.is_none() {
+            return;
+        }
+        let mut q = std::collections::VecDeque::<&Box<Node<_>>>::new();
+        let root = self.root.as_ref().unwrap();
+        q.push_back(root);
+        while !q.is_empty() {
+            for _ in 0..q.len() {
+                let node_value = q.pop_front().unwrap();
+                visitor.visit(&node_value.value);
+                if let Some(ref left) = node_value.left {
+                    q.push_back(left);
+                }
+                if let Some(ref right) = node_value.right {
+                    q.push_back(right);
+                }
+            }
+        }
+    }
+
+    fn traverse_postorder<V: crate::Visitor<T>>(&self, visitor: &mut V) {
+        if self.root.is_none() {
+            return;
+        }
+        let mut q = std::collections::VecDeque::<&Box<Node<_>>>::new();
+        let root = self.root.as_ref().unwrap();
+        q.push_back(root);
+        while !q.is_empty() {
+            for _ in 0..q.len() {
+                let node_value = q.pop_front().unwrap();
+                if let Some(ref left) = node_value.left {
+                    q.push_back(left);
+                }
+                if let Some(ref right) = node_value.right {
+                    q.push_back(right);
+                }
+                visitor.visit(&node_value.value);
+            }
+        }
+    }
+
+    fn traverse_levelorder<V: crate::Visitor<T>>(&self, visitor: &mut V) {
+        if self.root.is_none() {
+            return;
+        }
+        let mut q = std::collections::VecDeque::<&Box<Node<_>>>::new();
+        let root = self.root.as_ref().unwrap();
+
+        q.push_back(root);
+        visitor.visit(&root.value);
+        while !q.is_empty() {
+            for i in 0..q.len() {
+                let node_value = q.pop_front().unwrap();
+                if let Some(ref left) = node_value.left {
+                    visitor.visit(&left.value);
+                    q.push_back(left);
+                }
+                if let Some(ref right) = node_value.right {
+                    visitor.visit(&right.value);
+                    q.push_back(right);
+                }
+            }
+        }
+    }
+}
+
 impl<T: Ord> OrderedTree<T> for BST<T> {
     fn insert(&mut self, value: T) -> Result<()> {
         if self.root.is_none() {
@@ -258,13 +338,61 @@ impl<T: Ord> OrderedTree<T> for BST<T> {
     }
 
     fn contains(&self, value: &T) -> bool {
-        unimplemented!()
+        fn find_node<T: Ord>(node: &Option<Box<Node<T>>>, value: &T) -> bool {
+            match value.cmp(&node.as_ref().unwrap().value) {
+                Ordering::Equal => true,
+                Ordering::Less => find_node(&node.as_ref().unwrap().left, value),
+                Ordering::Greater => find_node(&node.as_ref().unwrap().right, value),
+            }
+        }
+        let node = &self.root;
+        find_node(node, value)
     }
+
     fn min(&self) -> Option<&T> {
-        unimplemented!()
+        fn most_left_iter<T: Ord>(mut node: &Box<Node<T>>) -> &T {
+            while let Some(left) = &node.left {
+                node = left;
+            }
+            &node.value
+        }
+
+        fn most_left<T: Ord>(node: &Box<Node<T>>) -> &T {
+            match **node {
+                Node {
+                    left: None,
+                    ref value,
+                    ..
+                } => value,
+                Node {
+                    left: Some(ref left),
+                    ..
+                } => most_left(left),
+            }
+        }
+        match &self.root {
+            None => None,
+            Some(root) => Some(most_left(root)),
+        }
     }
     fn max(&self) -> Option<&T> {
-        unimplemented!()
+        fn most_right_iter<T: Ord>(mut node: &Node<T>) -> &T {
+            while let Some(right) = &node.right {
+                node = right;
+            }
+            &node.value
+        }
+
+        fn most_right<T: Ord>(node: &Node<T>) -> &T {
+            match &node.right {
+                None => &node.value,
+                Some(right) => most_right(right),
+            }
+        }
+        match &self.root {
+            None => None,
+            Some(root) => Some(most_right(root)),
+        }
     }
 }
 
@@ -287,9 +415,123 @@ impl<T: Ord> Tree<T> for BST<T> {
     }
 }
 
+struct CollectVisitor {
+    values: Vec<i32>,
+}
+
+impl Visitor<i32> for CollectVisitor {
+    fn visit(&mut self, value: &i32) {
+        self.values.push(*value); // Collect in vector
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use crate::{OrderedTree, Tree};
+    use crate::{OrderedTree, Traversable, Tree};
+
+    #[test]
+    fn test_inorder() {
+        let mut bst = super::BST::new();
+        let items = vec![30, 10, 8, 11, 1, 9, 60, 50, 70];
+        for item in items {
+            bst.insert(item).unwrap();
+        }
+        let mut visitor = super::CollectVisitor { values: vec![] };
+        bst.traverse_postorder(&mut visitor);
+        assert_eq!(visitor.values, vec![1, 8, 9, 10, 11, 30, 50, 60, 70]);
+    }
+
+    #[test]
+    fn test_pos_order() {
+        let mut bst = super::BST::new();
+        let items = vec![30, 10, 8, 11, 1, 9, 60, 50, 70];
+        for item in items {
+            bst.insert(item).unwrap();
+        }
+        let mut visitor = super::CollectVisitor { values: vec![] };
+        bst.traverse_postorder(&mut visitor);
+        assert_eq!(visitor.values, vec![1, 9, 8, 11, 10, 50, 70, 60, 30]);
+    }
+
+    #[test]
+    fn test_level_order() {
+        let mut bst = super::BST::new();
+        let items = vec![30, 10, 8, 11, 1, 9, 60, 50, 70];
+        for item in items {
+            bst.insert(item).unwrap();
+        }
+        let mut visitor = super::CollectVisitor { values: vec![] };
+        bst.traverse_levelorder(&mut visitor);
+        assert_eq!(visitor.values, vec![30, 10, 60, 8, 11, 50, 70, 1, 9]);
+    }
+
+    #[test]
+    fn test_pre_order() {
+        let mut bst = super::BST::new();
+        let items = vec![30, 10, 8, 11, 1, 9, 60, 50, 70];
+        for item in items {
+            bst.insert(item).unwrap();
+        }
+        let mut visitor = super::CollectVisitor { values: vec![] };
+        bst.traverse_preorder(&mut visitor);
+        assert_eq!(visitor.values, vec![31, 10, 8, 1, 9, 11, 60, 50, 70]);
+    }
+
+    #[test]
+    fn test_max_value() {
+        let mut bst = super::BST::new();
+        bst.insert(30).unwrap();
+        bst.insert(10).unwrap();
+        bst.insert(8).unwrap();
+        bst.insert(2).unwrap();
+        bst.insert(1).unwrap();
+        bst.insert(60).unwrap();
+        bst.insert(40).unwrap();
+        bst.insert(32).unwrap();
+        bst.insert(50).unwrap();
+        bst.insert(70).unwrap();
+        bst.insert(65).unwrap();
+        bst.insert(67).unwrap();
+
+        let max = bst.max();
+        assert_eq!(max, Some(&70));
+    }
+
+    #[test]
+    fn test_min_value() {
+        let mut bst = super::BST::new();
+        bst.insert(30).unwrap();
+        bst.insert(10).unwrap();
+        bst.insert(8).unwrap();
+        bst.insert(2).unwrap();
+        bst.insert(1).unwrap();
+        bst.insert(60).unwrap();
+        bst.insert(40).unwrap();
+        bst.insert(32).unwrap();
+        bst.insert(50).unwrap();
+        bst.insert(70).unwrap();
+        bst.insert(65).unwrap();
+        bst.insert(67).unwrap();
+
+        let min = bst.min();
+        assert_eq!(min, Some(&1));
+    }
+
+    #[test]
+    fn test_contains_value() {
+        let mut bst = super::BST::new();
+        bst.insert(30).unwrap();
+        bst.insert(60).unwrap();
+        bst.insert(40).unwrap();
+        bst.insert(32).unwrap();
+        bst.insert(50).unwrap();
+        bst.insert(70).unwrap();
+        bst.insert(65).unwrap();
+        bst.insert(67).unwrap();
+
+        let exp = bst.contains(&32);
+        assert!(exp);
+    }
 
     #[test]
     fn test_insert_bst() {
