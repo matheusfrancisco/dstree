@@ -38,6 +38,7 @@
 pub mod common;
 
 // Tree implementations
+pub mod avl;
 pub mod binary;
 pub mod binary_traversal;
 pub mod bst;

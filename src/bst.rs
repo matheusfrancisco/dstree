@@ -24,6 +24,7 @@
 //! In-order traversal gives sorted sequence: [1, 3, 4, 5, 7, 9]
 
 use std::cmp::Ordering;
+use std::collections::VecDeque;
 
 use crate::common::error::{Result, TreeError};
 use crate::common::traits::{OrderedTree, Tree};
@@ -203,7 +204,14 @@ impl<T: Ord> BST<T> {
     }
 }
 
-impl<T: Ord> Traversable<T> for BST<T> {
+fn node_values<V, N>(nodes: V) -> Vec<N>
+where
+    V: IntoIterator<Item = N>,
+{
+    nodes.into_iter().collect()
+}
+
+impl<T: Ord + std::fmt::Debug> Traversable<T> for BST<T> {
     fn traverse_inorder<V: crate::Visitor<T>>(&self, visitor: &mut V) {
         fn inorder<T: Ord, V: crate::Visitor<T>>(node: &Option<Box<Node<T>>>, visitor: &mut V) {
             if let Some(n) = node {
@@ -219,19 +227,16 @@ impl<T: Ord> Traversable<T> for BST<T> {
         if self.root.is_none() {
             return;
         }
-        let mut q = std::collections::VecDeque::<&Box<Node<_>>>::new();
+        let mut q = VecDeque::<&Box<Node<_>>>::new();
         let root = self.root.as_ref().unwrap();
         q.push_back(root);
-        while !q.is_empty() {
-            for _ in 0..q.len() {
-                let node_value = q.pop_front().unwrap();
-                visitor.visit(&node_value.value);
-                if let Some(ref left) = node_value.left {
-                    q.push_back(left);
-                }
-                if let Some(ref right) = node_value.right {
-                    q.push_back(right);
-                }
+        while let Some(node) = q.pop_front() {
+            visitor.visit(&node.value);
+            if let Some(ref r) = node.right {
+                q.push_front(r);
+            }
+            if let Some(ref l) = node.left {
+                q.push_front(l);
             }
         }
     }
@@ -240,20 +245,52 @@ impl<T: Ord> Traversable<T> for BST<T> {
         if self.root.is_none() {
             return;
         }
-        let mut q = std::collections::VecDeque::<&Box<Node<_>>>::new();
-        let root = self.root.as_ref().unwrap();
-        q.push_back(root);
-        while !q.is_empty() {
-            for _ in 0..q.len() {
-                let node_value = q.pop_front().unwrap();
-                if let Some(ref left) = node_value.left {
-                    q.push_back(left);
+        let mut q = Vec::<&Box<Node<_>>>::new();
+        let mut curr = self.root.as_ref();
+        let mut last_visited: Option<&Box<Node<T>>> = None;
+
+        while curr.is_some() || !q.is_empty() {
+            //go left as far as possible
+            print!("q [");
+            for (i, n) in q.iter().enumerate() {
+                if i > 0 {
+                    print!(", ");
                 }
-                if let Some(ref right) = node_value.right {
-                    q.push_back(right);
-                }
-                visitor.visit(&node_value.value);
+                print!("{:?}", &n.value);
             }
+            println!("]");
+
+            while let Some(n) = curr {
+                q.push(n);
+                curr = n.left.as_ref();
+            }
+            println!("current {:?}", curr.map(|n| &n.value));
+
+            print!("q [");
+            for (i, n) in q.iter().enumerate() {
+                if i > 0 {
+                    print!(", ");
+                }
+                print!("{:?}", &n.value);
+            }
+            println!("]");
+            println!("last_visited: {:?}", last_visited.map(|n| &n.value));
+            let peek = match q.last().copied() {
+                None => break,
+                Some(n) => n,
+            };
+            if let Some(right) = peek.right.as_ref() {
+                if last_visited.map(|v| std::ptr::eq(v, right)) != Some(true) {
+                    curr = Some(right);
+                    continue;
+                } else {
+                    println!("right child {:?} already visited", right.value);
+                }
+            }
+            println!("visiting {:?} and popping from q", peek.value);
+            q.pop();
+            visitor.visit(&peek.value);
+            last_visited = Some(peek);
         }
     }
 
@@ -437,7 +474,7 @@ mod tests {
             bst.insert(item).unwrap();
         }
         let mut visitor = super::CollectVisitor { values: vec![] };
-        bst.traverse_postorder(&mut visitor);
+        bst.traverse_inorder(&mut visitor);
         assert_eq!(visitor.values, vec![1, 8, 9, 10, 11, 30, 50, 60, 70]);
     }
 
@@ -474,7 +511,7 @@ mod tests {
         }
         let mut visitor = super::CollectVisitor { values: vec![] };
         bst.traverse_preorder(&mut visitor);
-        assert_eq!(visitor.values, vec![31, 10, 8, 1, 9, 11, 60, 50, 70]);
+        assert_eq!(visitor.values, vec![30, 10, 8, 1, 9, 11, 60, 50, 70]);
     }
 
     #[test]
