@@ -1,3 +1,5 @@
+use std::cmp::Ordering;
+
 use crate::Tree;
 
 #[derive(Debug)]
@@ -85,6 +87,82 @@ impl<T: Ord + std::fmt::Debug + Clone> AvlTree<T> {
         if let Some(n) = node {
             Self::update_node_height(n);
         }
+    }
+
+    fn min_value_node(mut node: &Box<AvlNode<T>>) -> &Box<AvlNode<T>> {
+        while let Some(ref left) = node.left {
+            node = left;
+        }
+        node
+    }
+
+    fn remove_recursive(
+        node: Option<Box<AvlNode<T>>>,
+        value: &T,
+    ) -> (Option<Box<AvlNode<T>>>, bool) {
+        let mut node = match node {
+            Some(n) => n,
+            None => return (None, false),
+        };
+
+        let removed;
+        match value.cmp(&node.value) {
+            Ordering::Less => {
+                let (left, was_removed) = Self::remove_recursive(node.left.take(), value);
+                node.left = left;
+                removed = was_removed;
+            }
+
+            Ordering::Greater => {
+                let (right, was_removed) = Self::remove_recursive(node.right.take(), value);
+                node.right = right;
+                removed = was_removed;
+            }
+            Ordering::Equal => match (node.left.take(), node.right.take()) {
+                (None, None) => return (None, true),
+                (Some(left), None) => return (Some(left), true),
+                (None, Some(right)) => return (Some(right), true),
+                (Some(left), Some(right)) => {
+                    let (new_left, pred) = Self::rightmost_value(left);
+                    node.left = new_left;
+                    node.right = Some(right);
+                    node.value = pred;
+                    removed = true;
+                }
+            },
+        }
+        if removed {
+            Self::update_node_height(&mut node);
+            let mut new_node = Some(node);
+            Self::rebalance(&mut new_node);
+            (new_node, true)
+        } else {
+            (Some(node), false)
+        }
+    }
+
+    fn rightmost_value(mut node: Box<AvlNode<T>>) -> (Option<Box<AvlNode<T>>>, T) {
+        match node.right.take() {
+            Some(right) => {
+                let (new_right, value) = Self::rightmost_value(right);
+                node.right = new_right;
+                (Some(node), value)
+            }
+            None => (node.left.take(), node.value),
+        }
+    }
+
+    fn remove(&mut self, value: T) -> bool {
+        if self.root.is_none() {
+            return false;
+        }
+        let (root, removed) = Self::remove_recursive(self.root.take(), &value);
+        self.root = root;
+        if removed {
+            self.len -= 1;
+        }
+        self.height = Self::height_of(&self.root) as usize;
+        removed
     }
 
     fn insert(&mut self, value: T) -> bool {
@@ -259,6 +337,28 @@ mod tests {
     use super::AvlNode;
 
     #[test]
+    fn test_remove() {
+        let mut tree = AvlTree::new();
+        for item in [10, 20, 5, 15, 25, 3, 34] {
+            tree.insert(item);
+        }
+
+        assert_eq!(tree.len(), 7);
+        // Delete a leaf
+        assert!(tree.remove(3));
+        assert!(!tree.contains(&3));
+        assert_eq!(tree.len(), 6);
+        assert!(tree.remove(5));
+        assert!(!tree.contains(&5));
+        assert_eq!(tree.len(), 5);
+        // Delete a node with one child
+        assert!(tree.remove(10));
+        // Delete node with two children
+        assert!(tree.remove(20));
+        assert!(!tree.contains(&20));
+    }
+
+    #[test]
     fn test_avl_node_creation() {
         let node = AvlNode {
             value: 10,
@@ -298,7 +398,6 @@ mod tests {
         assert!(tree.contains(&15));
         assert!(tree.contains(&25));
         assert!(!tree.contains(&30));
-        println!("{:#?}", tree);
     }
 
     #[test]
