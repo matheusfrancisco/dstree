@@ -151,6 +151,7 @@ impl<T: Ord> BST<T> {
                             match (node.left.take(), node.right.take()) {
                                 (None, None) => {
                                     *curr = None;
+                                    //this height update is probably not so efficient
                                     self.update_height();
                                     return Ok(node.value);
                                 }

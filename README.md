@@ -122,8 +122,8 @@ fn main() {
 
 - [x] Phase 1: Project Setup & Common Infrastructure
 - [x] Phase 2: Binary Tree (Box<T>)
-- [ ] Phase 3: Binary Search Tree (Generic Constraints)
-- [ ] Phase 4: AVL Tree - Single-threaded (Rc<RefCell<T>>)
+- [x] Phase 3: Binary Search Tree (Generic Constraints)
+- [ ] Phase 4: AVL Tree - Single-threaded 
 - [ ] Phase 5: AVL Tree - Concurrent (Arc<RwLock<T>>)
 - [ ] Phase 6: Performance Optimization & Benchmarking
 - [ ] Phase 7: Advanced Features (Parent Pointers, Iterators, CLI)
