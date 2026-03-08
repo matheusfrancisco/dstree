@@ -42,6 +42,7 @@ pub mod avl;
 pub mod binary;
 pub mod binary_traversal;
 pub mod bst;
+pub mod btree;
 
 // Re-export commonly used types
 pub use common::{
