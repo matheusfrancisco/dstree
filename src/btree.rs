@@ -57,8 +57,7 @@ impl BTree {
 
     fn kmin(&self) -> usize {
         // ⌈order/2⌉ - 1
-        //((self.order + 1) / 2) - 1
-        self.order.div_ceil(2) - 1
+        ((self.order + 1) / 2) - 1
     }
     fn kmax(&self) -> usize {
         self.order - 1
@@ -193,7 +192,7 @@ impl BTree {
 
         let kmax = order - 1;
         debug_assert_eq!(child.keys.len(), kmax, "split_child: child must be full");
-        // mid = kmax / 2
+        // mid = kmax - 1 / 2
         //   order=4: kmax=3, mid=1 → left=[k0], median=k1, right=[k2]
         //   order=5: kmax=4, mid=2 → left=[k0,k1], median=k2, right=[k3]
         //   order=6: kmax=5, mid=2 → left=[k0,k1], median=k2, right=[k3,k4]
@@ -247,34 +246,49 @@ impl BTree {
 mod tests {
     use super::*;
 
-    #[test]
-    fn test_btree_insert() {
-        let mut btree = BTree::new(5);
-        btree.insert(10);
-        btree.insert(20);
-        btree.insert(30);
-        btree.insert(40);
-        btree.insert(50);
-        btree.insert(69);
-        btree.insert(70);
-        btree.insert(71);
-        btree.insert(1);
-        btree.insert(5);
-        btree.insert(2);
+    // #[test]
+    // fn test_btree_insert() {
+    //     let mut btree = BTree::new(5);
+    //     btree.insert(10);
+    //     btree.insert(20);
+    //     btree.insert(30);
+    //     btree.insert(40);
+    //     btree.insert(50);
+    //     btree.insert(69);
+    //     btree.insert(70);
+    //     btree.insert(71);
+    //     btree.insert(1);
+    //     btree.insert(5);
+    //     btree.insert(2);
 
+    //     println!("{:#?}", btree);
+    //     // Add assertions to verify the structure of the B-tree
+    //     btree.insert(15);
+    //     btree.insert(25);
+    //     println!("{:#?}", btree);
+    //     btree.insert(26);
+    //     btree.insert(27);
+    //     println!("{:#?}", btree);
+    //     btree.insert(32);
+    //     println!("{:#?}", btree);
+    //     btree.insert(33);
+    //     btree.insert(34);
+    //     btree.insert(35);
+    //     btree.insert(36);
+    //     println!("{:#?}", btree);
+    // }
+
+    #[test]
+    fn test_insert() {
+        //282 314 307 289 393 299 337 407 354 302 462 347 448 482 293 399 418 468 471 436
+        let items = vec![
+            282, 314, 307, 289, 393, 299, 337, 407, 354, 302, 462, 347, 448, 482, 293, 399, 418,
+            468, 471, 436,
+        ];
+        let mut btree = BTree::new(5);
+        for item in items {
+            btree.insert(item);
+        }
         println!("{:#?}", btree);
-        // Add assertions to verify the structure of the B-tree
-        btree.insert(15);
-        btree.insert(25);
-        println!("{:#?}", btree);
-        btree.insert(26);
-        btree.insert(27);
-        println!("{:#?}", btree);
-        btree.insert(32);
-        println!("{:#?}", btree);
-        btree.insert(33);
-        btree.insert(34);
-        btree.insert(35);
-        btree.insert(36);
     }
 }
